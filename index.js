@@ -9,13 +9,12 @@ const modelUid = "api::applicant.applicant";
 //init(providerOptions) {
 //return {
 //async function upload(file) {
-  async function upload(ctx,SERVICE_ACCOUNT_PATH) {
-
- // const SERVICE_ACCOUNT_PATH = path.join(
- //   process.cwd(),
- //   "service_account.json"
- // );
- // console.log(SERVICE_ACCOUNT_PATH);
+async function upload(ctx, SERVICE_ACCOUNT_PATH) {
+  // const SERVICE_ACCOUNT_PATH = path.join(
+  //   process.cwd(),
+  //   "service_account.json"
+  // );
+  // console.log(SERVICE_ACCOUNT_PATH);
   const SCOPES = ["https://www.googleapis.com/auth/drive.file"];
   const GOOGLEACCOUNT = "meenashi.s@devlaunchers.com";
 
@@ -25,17 +24,17 @@ const modelUid = "api::applicant.applicant";
   });
 
   const service = google.drive({ version: "v3", auth });
-  console.log("after service");
-  console.log(service);
+  //console.log("after service");
+  //console.log(service);
 
   const FOLDERID = "1jN1_Crat6nkpakD0BZsE3xKAIkJ26NE2";
 
   const {
     request: { body, files: { files } = {} },
   } = ctx;
-  console.log(files.name);
-  console.log(files.type);
-  console.log(files.path);
+  //console.log(files.name);
+  //console.log(files.type);
+  //console.log(files.path);
   const uploadSingleFile = async (fileName, fileType, filePath) => {
     const fsnp = require("fs");
 
@@ -45,7 +44,7 @@ const modelUid = "api::applicant.applicant";
       mimeType: fileType, //mime-types to get the file types
     };
 
-    console.log(fileMetadata);
+    //console.log(fileMetadata);
     const media = {
       mimeType: fileType,
       body: fsnp.createReadStream(filePath),
@@ -60,11 +59,6 @@ const modelUid = "api::applicant.applicant";
         requestBody: fileMetadata,
         media: media,
       });
-      console.log("response below");
-      console.log(response);
-      console.log("response above");
-
-      console.log("here iam");
       console.log(response.data.id);
       //ctx.response.status = 200;
       //ctx.response.message =
@@ -79,7 +73,7 @@ const modelUid = "api::applicant.applicant";
             emailAddress: GOOGLEACCOUNT,
           },
         });
-      console.log(permissionFiles);
+      //console.log(permissionFiles);
 
       //ctx.response.status = 200;
       //ctx.response.message =
@@ -98,21 +92,19 @@ const modelUid = "api::applicant.applicant";
       files["type"],
       files.path
     );
-    console.log(uploadResponse);
+    //console.log(uploadResponse);
     return uploadResponse;
   } catch (err) {
     ctx.throw(533, err);
     console.log(`error in upload ${err}`);
   }
 
- // return new Promise(async (resolve, reject) => {
-    //console.log("inside upload(file) below");
-    //console.log(file);
-    //console.log("inside upload(file) above");
-
+  // return new Promise(async (resolve, reject) => {
+  //console.log("inside upload(file) below");
+  //console.log(file);
+  //console.log("inside upload(file) above");
 }
 async function getAll(SERVICE_ACCOUNT_PATH) {
-  
   const SCOPES = ["https://www.googleapis.com/auth/drive.metadata.readonly"];
   //https://www.googleapis.com/auth/drive.metadata.readonly
   //const GOOGLEACCOUNT = "meenashi.s@devlaunchers.com";
@@ -139,36 +131,51 @@ async function getAll(SERVICE_ACCOUNT_PATH) {
     console.log("No files found.");
     return;
   }
- 
+
   //console.log("Files:");
- // files.map(async (file) => {
- //   console.log(`${file.name} (${file.id}) (${file}) `);
-    //      const permissionFiles = await service.permissions.create({
-    //        fileId: file.id,
-    //        resource: { type: "user", role: "reader", emailAddress: GOOGLEACCOUNT },
-    //      });
-    //      console.log(permissionFiles);
+  // files.map(async (file) => {
+  //   console.log(`${file.name} (${file.id}) (${file}) `);
+  //      const permissionFiles = await service.permissions.create({
+  //        fileId: file.id,
+  //        resource: { type: "user", role: "reader", emailAddress: GOOGLEACCOUNT },
+  //      });
+  //      console.log(permissionFiles);
   //});
   return res;
   //ctx.response.status = 200;
   //ctx.response.message = "Google Upload Response Success";
   // return new Promise(async (resolve, reject) => {
   //  console.log("inside getAll below");
-       
+
   //  console.log("inside getAll above");
   //  return {"name":"Sathya", "type":"doc"}
-
 }
-  
- 
- async function deleteFile(file) {
+
+async function deleteFile(ctx, SERVICE_ACCOUNT_PATH) {
+  //const SERVICE_ACCOUNT_PATH = path.join(process.cwd(), "service_account.json");
+  //console.log(SERVICE_ACCOUNT_PATH);
+  const SCOPES = ["https://www.googleapis.com/auth/drive.file"];
+
+  const auth = new google.auth.GoogleAuth({
+    keyFile: SERVICE_ACCOUNT_PATH,
+    scopes: SCOPES,
+  });
+
+  const service = google.drive({ version: "v3", auth });
+  console.log(ctx.request.query);
+  const response = await service.files.delete({
+    fileId: ctx.request.query.fileId,
+  });
+  return response;
+}
+/*async function deleteFile(file) {
   // return new Promise(async (resolve, reject) => {
      console.log("inside deleteFile(file) below");
      console.log(file);
      console.log("inside deleteFile(file) above");
  
- }
-module.exports = {upload,getAll,deleteFile};
+ } */
+module.exports = { upload, getAll, deleteFile };
 //  };
 // },
 //};
