@@ -9,12 +9,15 @@ const modelUid = "api::applicant.applicant";
 //init(providerOptions) {
 //return {
 //async function upload(file) {
-async function upload(ctx, SERVICE_ACCOUNT_PATH) {
-  // const SERVICE_ACCOUNT_PATH = path.join(
-  //   process.cwd(),
-  //   "service_account.json"
-  // );
-  // console.log(SERVICE_ACCOUNT_PATH);
+async function upload(ctx) {
+  const SERVICE_ACCOUNT_PATH = path.join(
+    process.cwd(),
+    "config",
+    "env",
+    "service_account.json"
+  );
+
+  console.log(SERVICE_ACCOUNT_PATH);
   const SCOPES = ["https://www.googleapis.com/auth/drive.file"];
   const GOOGLEACCOUNT = "meenashi.s@devlaunchers.com";
 
@@ -104,7 +107,14 @@ async function upload(ctx, SERVICE_ACCOUNT_PATH) {
   //console.log(file);
   //console.log("inside upload(file) above");
 }
-async function getAll(SERVICE_ACCOUNT_PATH) {
+//async function getAll(SERVICE_ACCOUNT_PATH) {
+async function getAll() {
+  const SERVICE_ACCOUNT_PATH = path.join(
+    process.cwd(),
+    "config",
+    "env",
+    "service_account.json"
+  );
   const SCOPES = ["https://www.googleapis.com/auth/drive.metadata.readonly"];
   //https://www.googleapis.com/auth/drive.metadata.readonly
   //const GOOGLEACCOUNT = "meenashi.s@devlaunchers.com";
@@ -151,9 +161,15 @@ async function getAll(SERVICE_ACCOUNT_PATH) {
   //  return {"name":"Sathya", "type":"doc"}
 }
 
-async function deleteFile(ctx, SERVICE_ACCOUNT_PATH) {
-  //const SERVICE_ACCOUNT_PATH = path.join(process.cwd(), "service_account.json");
-  //console.log(SERVICE_ACCOUNT_PATH);
+async function deleteFile(ctx) {
+  const SERVICE_ACCOUNT_PATH = path.join(
+    process.cwd(),
+    "config",
+    "env",
+    "service_account.json"
+  );
+
+  console.log(SERVICE_ACCOUNT_PATH);
   const SCOPES = ["https://www.googleapis.com/auth/drive.file"];
 
   const auth = new google.auth.GoogleAuth({
