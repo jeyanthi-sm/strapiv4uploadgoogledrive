@@ -1,0 +1,22 @@
+{
+  "name": "strapiv4-provider-to-google-drive",
+  "version": "1.0.1",
+  "description": "strapi v4 provider to google drive",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeyanthi-sm/strapiv4-provider-to-google-drive.git"
+  },
+  "author": "jeyanthi_sm",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeyanthi-sm/strapiv4-provider-to-google-drive/issues"
+  },
+  "homepage": "https://github.com/jeyanthi-sm/strapiv4-provider-to-google-drive#readme",
+  "dependencies": {
+    "googleapis": "^144.0.0"
+  }
+}
